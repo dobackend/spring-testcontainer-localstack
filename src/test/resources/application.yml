@@ -1,0 +1,4 @@
+# Have a test profile to ensure that non-test dependencies can be excluded
+spring:
+  profiles:
+    active: test
