@@ -1,6 +1,8 @@
 package dobackend.com.springtestcontainers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import io.awspring.cloud.dynamodb.DynamoDbTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,12 +25,18 @@ public class AccountController {
 
     private final AccountRepository accountRepository;
 
+    private final DynamoDbTemplate dynamoDbTemplate;
+
+    private final ObjectMapper objectMapper;
+
     private static <T> Predicate<T> not(Predicate<T> t) {
         return t.negate();
     }
 
-    public AccountController(AccountRepository accountRepository) {
+    public AccountController(AccountRepository accountRepository, DynamoDbTemplate dynamoDbTemplate, ObjectMapper objectMapper) {
         this.accountRepository = accountRepository;
+        this.dynamoDbTemplate = dynamoDbTemplate;
+        this.objectMapper = objectMapper;
     }
 
     @GetMapping("/{id}")
@@ -91,4 +99,12 @@ public class AccountController {
         logger.error("Oh dear, the data already exists", ex);
         // return empty 409
     }
+
+    @PostMapping("/event")
+    public ResponseEntity<Void> createAccountEvent(@RequestBody AccountEvent accountEvent) {
+        dynamoDbTemplate.save(accountEvent.mapToDynamoEntity(objectMapper));
+
+        return ResponseEntity.created(URI.create("/accounts/" + accountEvent.account().accountId().toString())).build();
+    }
+
 }

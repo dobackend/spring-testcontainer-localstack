@@ -1,6 +1,6 @@
 spring:
   application:
-    name: spring-testcontainer-sample
+    name: spring-testcontainer-localstack
   profiles:
     active: dev
 
@@ -17,9 +17,17 @@ spring:
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 5
+  cloud:
+    aws:
+      endpoint: http://localhost:4566
+      dynamodb:
+        region: us-east-1
+      region:
+        static: us-east-1
+
 logging:
   level:
-    root: error
+    root: debug
 
 
 

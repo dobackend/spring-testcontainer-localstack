@@ -1,6 +1,7 @@
 package dobackend.com.springtestcontainers;
 
 import com.zaxxer.hikari.HikariDataSource;
+import io.awspring.cloud.dynamodb.DynamoDbTableNameResolver;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,5 +31,11 @@ public class AccountConfiguration {
         dataSource.setMaximumPoolSize(datasourceConfig.hikari().maximumPoolSize());
 
         return dataSource;
+    }
+
+
+    @Bean
+    public DynamoDbTableNameResolver dynamoDbTableNameResolver() {
+        return new AccountEventTableName();
     }
 }

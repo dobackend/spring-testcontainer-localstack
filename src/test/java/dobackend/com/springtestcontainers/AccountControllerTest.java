@@ -1,6 +1,7 @@
 package dobackend.com.springtestcontainers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.awspring.cloud.dynamodb.DynamoDbTemplate;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
 
-import static org.mockito.BDDMockito.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -29,6 +31,9 @@ class AccountControllerTest {
 
     @MockBean
     private AccountRepository accountRepository;
+
+    @MockBean
+    private DynamoDbTemplate dynamoDbTemplate;
 
     @Test
     public void shouldCreateAccountOnPost() throws Exception {

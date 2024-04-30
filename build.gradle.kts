@@ -16,6 +16,9 @@ repositories {
 }
 
 dependencies {
+    implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.1.1"))
+    implementation("io.awspring.cloud:spring-cloud-aws-starter-sqs")
+    implementation("io.awspring.cloud:spring-cloud-aws-starter-dynamodb")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.flywaydb:flyway-core")
