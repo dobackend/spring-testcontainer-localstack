@@ -5,13 +5,13 @@ hash_key="accountId"
 range_key="timestamp"
 
 awslocal dynamodb create-table \
-    --table-name account_events \
+    --table-name user_events \
     --attribute-definitions \
-        AttributeName=accountId,AttributeType=S \
-        AttributeName=timestamp,AttributeType=N \
+        AttributeName=userId,AttributeType=S \
+        AttributeName=sortKey,AttributeType=S \
     --key-schema \
-        AttributeName=accountId,KeyType=HASH \
-        AttributeName=timestamp,KeyType=RANGE \
+        AttributeName=userId,KeyType=HASH \
+        AttributeName=sortKey,KeyType=RANGE \
     --billing-mode PAY_PER_REQUEST
 
 echo "DynamoDB table '$table_name' created successfully with hash key '$hash_key' and range key '$range_key'"

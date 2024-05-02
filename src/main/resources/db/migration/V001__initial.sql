@@ -1,1 +1,1 @@
-create table ACCOUNT (ID serial primary key, ACCOUNT_ID uuid, NAME varchar(50) not null, unique(ACCOUNT_ID));
+create table USERS (ID serial primary key, USER_ID uuid, NAME varchar(50) not null, unique(USER_ID));

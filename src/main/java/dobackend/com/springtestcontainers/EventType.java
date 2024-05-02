@@ -1,5 +1,6 @@
 package dobackend.com.springtestcontainers;
 
 public enum EventType {
-    UPSERT, DELETE
+    USER_CREATED_UPDATED,
+    USER_DELETED,
 }

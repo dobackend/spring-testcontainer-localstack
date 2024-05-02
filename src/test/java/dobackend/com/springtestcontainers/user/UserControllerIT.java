@@ -1,5 +1,6 @@
-package dobackend.com.springtestcontainers;
+package dobackend.com.springtestcontainers.user;
 
+import dobackend.com.springtestcontainers.AbstractContainerTests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 // Spinning up postgres to test full e2e flow from api to db
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class AccountControllerIT extends AbstractContainerTests {
+public class UserControllerIT extends AbstractContainerTests {
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -20,28 +21,26 @@ public class AccountControllerIT extends AbstractContainerTests {
     // We just want one happy path test for e2e integration. The WebMvc Slice test
     // takes care of the rest of the test cases.
     @Test
-    public void addGetAndDeleteAccount() {
-
-        String addUri = "/accounts";
-
+    public void addGetAndDeleteUser() throws Exception {
         UUID uuid = UUID.randomUUID();
         String name = "John Doe";
+        String addUri = "/users";
 
-        URI getLocation = restTemplate.postForLocation(addUri, new Account(uuid, name));
+        URI getLocation = restTemplate.postForLocation(addUri, new User(uuid, name));
 
         assertThat(getLocation).isNotNull();
 
-        Account account = restTemplate.getForObject(getLocation, Account.class);
+        User user = restTemplate.getForObject(getLocation, User.class);
 
-        assertThat(account).isNotNull();
-        assertThat(account.name()).isEqualTo(name);
-        assertThat(account.accountId()).isEqualTo(uuid);
+        assertThat(user).isNotNull();
+        assertThat(user.name()).isEqualTo(name);
+        assertThat(user.userId()).isEqualTo(uuid);
 
         restTemplate.delete(getLocation);
 
-        account = restTemplate.getForObject(getLocation, Account.class);
+        user = restTemplate.getForObject(getLocation, User.class);
 
-        assertThat(account).isNull();
+        assertThat(user).isNull();
 
     }
 }
