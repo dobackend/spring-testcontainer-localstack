@@ -4,7 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
 }
 
-group = "dobackend.com"
+group = "com.dobackend"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -13,6 +13,7 @@ java {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -22,6 +23,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.flywaydb:flyway-core")
+    implementation("com.dobackend:event-model:0.0.1-SNAPSHOT")
 
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")
@@ -31,6 +33,7 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:localstack")
+    testImplementation("org.awaitility:awaitility:4.2.1")
 
 }
 

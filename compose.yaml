@@ -13,18 +13,33 @@ services:
     container_name: localstack_demo
     image: localstack/localstack:latest
     ports:
-      - "4566:4566"            # LocalStack Gateway
-#      - "4510-4559:4510-4559"
+      - "4566:4566"
     environment:
-      #      - DATA_DIR=/tmp/localstack/data # remove deprecated environment variable (more info https://docs.localstack.cloud/references/configuration/#legacy)
-      - SERVICES=sqs, dynamodb
+      - SERVICES=sqs, dynamodb, dynamodbstreams, lambda, logs, sns
       - DEFAULT_REGION=us-east-1
       - EDGE_PORT=4566
       - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
-      #      - './localstack:/tmp/localstack' #set correct pathing on docker container  - './localstack:/var/lib/localstack' (more info https://docs.localstack.cloud/references/filesystem/#localstack-volume)
       - './src/main/resources/init-dynamodb.sh:/etc/localstack/init/ready.d/init-dynamodb.sh'
       - './localstack:/var/lib/localstack'
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - './lambda/build/libs/lambda-0.0.1-SNAPSHOT-all.jar:/tmp/lambda-0.0.1-SNAPSHOT-all.jar'
+    networks:
+      ls:
+        ipv4_address: 10.0.2.20
+  application:
+    image: ghcr.io/localstack/localstack-docker-debug:main
+    entrypoint: ""
+    command: [ "sleep", "infinity" ]
+    dns:
+      - 10.0.2.20
+    networks:
+      - ls
+networks:
+  ls:
+    ipam:
+      config:
+        - subnet: 10.0.2.0/24
+
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>dobackend.com</groupId>
+  <artifactId>event-model</artifactId>
+  <versioning>
+    <lastUpdated>20240506102035</lastUpdated>
+    <snapshot>
+      <timestamp>20240506.102035</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>module</extension>
+        <value>0.0.1-20240506.102035-1</value>
+        <updated>20240506102035</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.0.1-20240506.102035-1</value>
+        <updated>20240506102035</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>0.0.1-20240506.102035-1</value>
+        <updated>20240506102035</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+  <version>0.0.1-SNAPSHOT</version>
+</metadata>

@@ -1,1 +1,1 @@
-create table USERS (ID serial primary key, USER_ID uuid, NAME varchar(50) not null, unique(USER_ID));
+create table USERS (ID serial primary key, USER_ID uuid not null , NAME varchar(50) not null, SEQUENCE_NUMBER bigint , unique(USER_ID));
