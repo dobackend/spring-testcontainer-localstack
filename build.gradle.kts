@@ -34,6 +34,10 @@ dependencies {
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:localstack")
     testImplementation("org.awaitility:awaitility:4.2.1")
+    testImplementation("software.amazon.awssdk:lambda:2.25.56") // If you need AWS Lambda client
+    testImplementation("software.amazon.awssdk:sns:2.25.56") // If you need AWS Lambda client
+
+
 
 }
 

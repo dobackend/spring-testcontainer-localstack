@@ -6,9 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @JdbcTest(properties = {"spring.flyway.locations=classpath:/db/migration,classpath:/db/test_migration"})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import(UserRepository.class)
+@Import({UserRepository.class})
 class UserRepositoryIT extends AbstractContainerTests {
 
     @Autowired
@@ -26,6 +29,12 @@ class UserRepositoryIT extends AbstractContainerTests {
 
     @Autowired
     private UserRepository userRepository;
+
+    @MockBean
+    private DynamoDbClient dynamoDbClient;
+
+    @MockBean
+    private DynamoDbEnhancedClient dynamoDbEnhancedClient;
 
     @Test
     void create() {

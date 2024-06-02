@@ -4,19 +4,18 @@ import com.dobackend.springtestcontainers.AbstractContainerTests;
 import com.dobackend.springtestcontainers.EventType;
 import com.dobackend.springtestcontainers.authz.user.User;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
-import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
-import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
-import software.amazon.awssdk.services.dynamodb.model.*;
-import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
+import software.amazon.awssdk.services.dynamodb.model.DeleteTableRequest;
+import software.amazon.awssdk.services.dynamodb.model.DeleteTableResponse;
+import software.amazon.awssdk.services.dynamodb.model.TableStatus;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,31 +28,12 @@ public class UserEventControllerIT extends AbstractContainerTests {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    private DynamoDbClient dynamoDbClient;
-
-    @Autowired
-    private DynamoDbEnhancedClient dynamoDbEnhancedClient;
-
-    @Autowired
-    private UserEventRepository eventRepository;
-
-    @Autowired
     private UserEventRepository userEventRepository;
 
     @BeforeEach
-    public void setUp() {
-        DynamoDbTable<UserEntity> accountTable = dynamoDbEnhancedClient.table("user_events", TableSchema.fromBean(UserEntity.class));
-
-        try {
-            accountTable.createTable();
-        } catch (ResourceInUseException e) {
-            // swallow and ignore if table already exists
-        }
-
-        try (DynamoDbWaiter waiter = DynamoDbWaiter.builder().client(dynamoDbClient).build()) {
-            ResponseOrException<DescribeTableResponse> response = waiter.waitUntilTableExists(builder -> builder.tableName("user_events").build()).matched();
-            DescribeTableResponse tableDescription = response.response().orElseThrow(() -> new RuntimeException("Table not found"));
-        }
+    public void setUp() throws Exception{
+        createDynamoDBAndLambda();
+        createSNS();
     }
 
 //    @Test
