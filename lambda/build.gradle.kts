@@ -5,10 +5,10 @@ plugins {
 }
 
 application {
-    mainClass.set("com.dobackend.Handler")
+    mainClass.set("com.roodt.Handler")
 }
 
-group = "com.dobackend"
+group = "com.roodt"
 version = "0.0.1-SNAPSHOT"
 
 java {

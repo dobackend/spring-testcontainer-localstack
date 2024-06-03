@@ -4,7 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
 }
 
-group = "com.dobackend"
+group = "net.roodt"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -23,7 +23,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.flywaydb:flyway-core")
-    implementation("com.dobackend:event-model:0.0.1-SNAPSHOT")
+    implementation("net.roodt:event-model:0.0.1-SNAPSHOT")
 
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")

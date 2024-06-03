@@ -12,7 +12,7 @@ echo "Creating lambda function"
 awslocal lambda create-function \
 --function-name user-events-function \
 --runtime java21 \
---handler com.dobackend.Handler::handleRequest \
+--handler net.roodt.Handler::handleRequest \
 --timeout 30 \
 --zip-file fileb:///tmp/lambda-0.0.1-SNAPSHOT-all.jar \
 --role arn:aws:iam::000000000000:role/user-events-function-role

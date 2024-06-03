@@ -4,7 +4,7 @@ plugins {
 
 }
 
-group = "com.dobackend"
+group = "net.roodt"
 version = "0.0.1-SNAPSHOT"
 
 repositories {
